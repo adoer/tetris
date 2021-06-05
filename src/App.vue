@@ -4,6 +4,7 @@
   <!-- :pagination="pagination" -->
   <div class="statistics">
     <a-table 
+      rowKey="id"
       :scroll="{ y: 400 }" 
       size="small" 
       :dataSource="dataSource" 
@@ -83,10 +84,16 @@ export default {
     changeTable(data){
       this.dataSource.unshift(data);
     },
+    getData(){
+      this.axios.get('/getUser').then((res) => {
+        if(res.data.success){
+          this.dataSource = res.data.data;
+        }
+      })
+    },
   },
   mounted(){
-    console.log(this.axios);
-    debugger
+    this.getData();
   }
 }
 </script>
