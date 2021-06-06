@@ -56,12 +56,20 @@ module.exports = {
             hotOnly: true, // 热更新
             // proxy: 'http://localhost:8080'   // 配置跨域处理,只有一个代理
             proxy: { //配置多个跨域
-                "/getUser": {
-                    target: "http://localhost:8080/getUser",
+                "/getTetris": {
+                    target: "http://localhost:8080/getTetris",
                     changeOrigin: true,
                     secure: false,
                     pathRewrite: {
-                        "^/getUser": ""
+                        "^/getTetris": ""
+                    }
+                },
+                "/addTetris": {
+                    target: "http://localhost:8080/addTetris",
+                    changeOrigin: true,
+                    secure: false,
+                    pathRewrite: {
+                        "^/addTetris": ""
                     }
                 },
                 "/api2": {

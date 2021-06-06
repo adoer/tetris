@@ -3,6 +3,20 @@
   <Tetris @changeTable="changeTable"/>
   <!-- :pagination="pagination" -->
   <div class="statistics">
+    <div class="headVal">
+      <div class="item">
+        <span class="title">尝试次数：</span>
+        <span class="val">{{total}}</span>
+      </div>
+      <div class="item">
+        <span class="title">平均得分：</span>
+        <span class="val">{{avgPoint}}</span>
+      </div>
+      <div class="item">
+        <span class="title">平均行数：</span>
+        <span class="val">{{avgRows}}</span>
+      </div>
+    </div>
     <a-table 
       rowKey="id"
       :scroll="{ y: 400 }" 
@@ -12,6 +26,7 @@
       :pagination="pagination"
     />
   </div>
+  
 </a-config-provider>
 </template>
 
@@ -26,6 +41,9 @@ export default {
   data() {
     return {
       locale: zhCN,
+      avgPoint: 0,
+      avgRows: 0,
+      total: 0,
       /* 分页参数 */
       pagination: {
         // current: 1,
@@ -81,13 +99,27 @@ export default {
     };
   },
   methods:{
-    changeTable(data){
-      this.dataSource.unshift(data);
+    changeTable(params){
+      // this.dataSource.unshift(data);
+      this.axios.post('/addTetris',params).then((res) => {
+        if(res.data.success){
+          console.log("入库成功");
+          this.getData();
+        }
+      })
     },
     getData(){
-      this.axios.get('/getUser').then((res) => {
+      this.axios.get('/getTetris').then((res) => {
         if(res.data.success){
           this.dataSource = res.data.data;
+          let curPoint = 0,curRows = 0,l = this.dataSource.length;
+          this.dataSource.forEach(el =>{
+            curPoint += el.point;
+            curRows += el.rows;
+          });
+          this.total = l;
+          this.avgPoint = (curPoint/l).toFixed(2);
+          this.avgRows = (curRows/l).toFixed(2);
         }
       })
     },
@@ -100,9 +132,18 @@ export default {
 <style lang="less">
 .statistics{
   width: 700px;
+  padding: 10px;
   background: #fff;
   @borderRadius: 6px;
   border-radius: @borderRadius;
+  .headVal{
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 0;
+    .val{
+      color: #ff4d4f
+    }
+  }
   .ant-table{
     border-radius: @borderRadius;
   }

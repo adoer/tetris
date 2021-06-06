@@ -10,7 +10,9 @@ import "./styles/app.less"
 let instance = axios.create({
   baseURL: '/',
   timeout: 1000,
-  headers: {'X-Custom-Header': 'foobar'}
+  headers: {
+    'X-Custom-Header': 'foobar',
+  }
 });
 
 const app = createApp(App);

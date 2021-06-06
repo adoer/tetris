@@ -1108,13 +1108,14 @@ class Tetris {
             self.showGameOverFlag = true;
             // 记录数据
             let nowTime = new Date().getTime();
-            self.vue.$emit("changeTable",{
-              key: nowTime,
+            let params = {
+              // key: nowTime,
               rows: self.hasRows,
               point: self.point,
               time: self.timestampToDatetime(nowTime),
               useTime: self.diffTime(nowTime),
-            });
+            };
+            self.vue.$emit("changeTable",params);
             console.log("游戏结束");
             document.getElementById("reStart").click();
             // 播放gameOver音效
