@@ -1,6 +1,6 @@
 import TetrisAi from "./tetrisAi"
 class Tetris {
-  constructor(opt,vue) {
+  constructor(opt, vue) {
     this.vue = vue;
     this.blockSize = opt.blockSize || 25;
     this.rows = opt.rows || 10;
@@ -467,10 +467,10 @@ class Tetris {
     // 初始化
     this._init();
   }
-  add0(m){
+  add0(m) {
     return m < 10 ? '0' + m : m;
   }
-  timestampToDatetime(timestamp, mode = 1){
+  timestampToDatetime(timestamp, mode = 1) {
     if (!timestamp) {
       return ''
     }
@@ -946,20 +946,20 @@ class Tetris {
     //随机产生0-3(上，右，下，左)，代表4个方向的形态
     let dirRandomNum;
     // 如果是I，Z，S形状，只需要产生0,1（上下，左右相同） 
-    if(shape === 'I' || shape === 'Z' || shape === 'S'){
+    if (shape === 'I' || shape === 'Z' || shape === 'S') {
       dirRandomNum = Math.floor(Math.random() * 2);
-    // 如果是O形状，只需要产生0（上下左右相同）
-    }else if(shape === 'O'){
+      // 如果是O形状，只需要产生0（上下左右相同）
+    } else if (shape === 'O') {
       dirRandomNum = 0;
-    }else {
+    } else {
       dirRandomNum = Math.floor(Math.random() * 4);
     }
-    
+
     //初始坐标
     let dir = self.dirArr[dirRandomNum];
     return self.deepCopy(self.blockData[shape][dir]);
   }
-  drawBlocktest(block){
+  drawBlocktest(block) {
     // 清空画布
     this.clearCanvas();
     // 绘制基础底色和网格
@@ -1048,7 +1048,7 @@ class Tetris {
 
       self.hasRows += pointRows;
       //判断curLevel大小 每30行升一级
-      document.getElementById("level").innerHTML = self.hasRows;
+      document.getElementById("level").innerHTML = "行数 " + self.hasRows;
       let curLevel = Math.ceil(self.hasRows / 30);
       /* if (self.hasRows > 30 && self.level < curLevel) {
         self.level = curLevel;
@@ -1115,7 +1115,7 @@ class Tetris {
               time: self.timestampToDatetime(nowTime),
               useTime: self.diffTime(nowTime),
             };
-            self.vue.$emit("changeTable",params);
+            self.vue.$emit("changeTable", params);
             console.log("游戏结束");
             document.getElementById("reStart").click();
             // 播放gameOver音效
@@ -1278,29 +1278,29 @@ class Tetris {
       }
     }
   }
-  diffTime(nowTime){
+  diffTime(nowTime) {
     let date3 = nowTime - this.buildUseTimeNow;
     //计算出相差天数
-    let days=Math.floor(date3/(24*3600*1000));
-    if(days === 0){
+    let days = Math.floor(date3 / (24 * 3600 * 1000));
+    if (days === 0) {
       days = '';
-    }else {
+    } else {
       days = add0(days) + ':';
     }
     //计算出小时数
-    let leave1=date3%(24*3600*1000)    //计算天数后剩余的毫秒数
-    let hours=Math.floor(leave1/(3600*1000));
+    let leave1 = date3 % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数
+    let hours = Math.floor(leave1 / (3600 * 1000));
     hours = this.add0(hours);
     //计算相差分钟数
-    let leave2=leave1%(3600*1000)        //计算小时数后剩余的毫秒数
-    let minutes=Math.floor(leave2/(60*1000));
+    let leave2 = leave1 % (3600 * 1000)        //计算小时数后剩余的毫秒数
+    let minutes = Math.floor(leave2 / (60 * 1000));
     minutes = this.add0(minutes);
     //计算相差秒数
-    let leave3=leave2%(60*1000)      //计算分钟数后剩余的毫秒数
-    let seconds=Math.round(leave3/1000);
+    let leave3 = leave2 % (60 * 1000)      //计算分钟数后剩余的毫秒数
+    let seconds = Math.round(leave3 / 1000);
     seconds = this.add0(seconds);
     // 修正seconds不对 
-    if(seconds>2){
+    if (seconds > 2) {
       seconds--;
     }
     seconds = this.add0(seconds);
@@ -1497,7 +1497,8 @@ class Tetris {
 
       self.hasRows = 0;
       self.level = 1;
-      document.getElementById("level").innerHTML = "等级 " + self.level;
+      // document.getElementById("level").innerHTML = "等级 " + self.level;
+      document.getElementById("level").innerHTML = "行数 " + self.hasRows;
 
       //可以绘制drawCanvasBlock
       self.drawCanvasBlockFlag = true;
@@ -1597,7 +1598,7 @@ class Tetris {
     //创建速度div
     let speed = document.createElement("div");
     speed.id = "level";
-    speed.appendChild(document.createTextNode("等级 1"));
+    speed.appendChild(document.createTextNode("行数 0"));
     divInfo.appendChild(speed);
 
     //创建速得分div

@@ -96,32 +96,53 @@ export default {
           dataIndex: 'time',
         },
       ],
+      netTag: true
     };
   },
   methods:{
     changeTable(params){
-      // this.dataSource.unshift(data);
-      this.axios.post('/addTetris',params).then((res) => {
-        if(res.data.success){
-          console.log("入库成功");
-          this.getData();
-        }
-      })
+      if(this.netTag){
+        this.axios.post('/addTetris',params).then((res) => {
+          if(res.data.success){
+            console.log("入库成功");
+            this.getData();
+          }
+        })
+        return;
+      }
+      let curData = JSON.parse(localStorage.getItem('data')) || [];
+      curData.unshift(params);
+      localStorage.setItem('data',JSON.stringify(curData));
+      this.dataSourceHandle(curData)
+    },
+    dataSourceHandle(params){
+      if(!params){
+        return
+      }
+      let curPoint = 0,curRows = 0,l = params.length;
+      params.forEach(el =>{
+        curPoint += el.point;
+        curRows += el.rows;
+      });
+      this.dataSource = params;
+      this.total = l;
+      this.avgPoint = (curPoint/l).toFixed(2) || 0;
+      this.avgRows = (curRows/l).toFixed(2) || 0;
     },
     getData(){
-      this.axios.get('/getTetris').then((res) => {
-        if(res.data.success){
-          this.dataSource = res.data.data;
-          let curPoint = 0,curRows = 0,l = this.dataSource.length;
-          this.dataSource.forEach(el =>{
-            curPoint += el.point;
-            curRows += el.rows;
-          });
-          this.total = l;
-          this.avgPoint = (curPoint/l).toFixed(2);
-          this.avgRows = (curRows/l).toFixed(2);
-        }
-      })
+      if(this.netTag){
+        this.axios.get('/getTetris').then((res) => {
+          if(res.data.success){
+            this.dataSourceHandle(res.data.data)
+          }
+        }).catch((error)=>{
+          console.log("获取数据失败",error);
+          this.netTag = false
+          this.dataSourceHandle(JSON.parse(localStorage.getItem('data')));
+        })
+        return;
+      }
+      this.dataSourceHandle(JSON.parse(localStorage.getItem('data')));
     },
   },
   mounted(){
