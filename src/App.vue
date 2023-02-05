@@ -3,18 +3,21 @@
   <Tetris @changeTable="changeTable"/>
   <!-- :pagination="pagination" -->
   <div class="statistics">
-    <div class="headVal">
-      <div class="item">
-        <span class="title">尝试次数：</span>
-        <span class="val">{{total}}</span>
-      </div>
-      <div class="item">
-        <span class="title">平均得分：</span>
-        <span class="val">{{avgPoint}}</span>
-      </div>
-      <div class="item">
-        <span class="title">平均行数：</span>
-        <span class="val">{{avgRows}}</span>
+    <div class="headCon">
+      <div class="tableTitle">Ai数据记录</div>
+      <div class="headVal">
+        <div class="item">
+          <span class="title">尝试次数：</span>
+          <span class="val">{{total}}</span>
+        </div>
+        <div class="item">
+          <span class="title">平均得分：</span>
+          <span class="val">{{avgPoint}}</span>
+        </div>
+        <div class="item">
+          <span class="title">平均行数：</span>
+          <span class="val">{{avgRows}}</span>
+        </div>
       </div>
     </div>
     <a-table 
@@ -157,10 +160,19 @@ export default {
   background: #fff;
   @borderRadius: 6px;
   border-radius: @borderRadius;
+  .headCon{
+    margin: 10px 0;
+    display: flex;
+  }
+  .tableTitle{
+    font-size: 12px;
+    color: #bfbfbf;
+    width: 60px;
+  }
   .headVal{
     display: flex;
     justify-content: space-around;
-    margin: 10px 0;
+    width: calc(100% - 60px);
     .val{
       color: #ff4d4f
     }

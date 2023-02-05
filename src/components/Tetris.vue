@@ -1,6 +1,7 @@
 <template>
   <div class="tetrisWrap">
-    <div id="tetris"></div>
+    <div id="tetris">
+    </div>
   </div>
 </template>
 
@@ -79,10 +80,11 @@ export default {
       width: 100px;
       cursor: pointer;
       display: block;
-      margin-top: 16px;
+      margin-top: 9px;
       padding-left: 2px;
       box-shadow: 0px 1px 8px -1px #a87a15 inset;
       border-radius: 42px;
+      transform: scale(0.9);
       //兼容ie10 加了高度，不然高度会变形
       height: 36.56px;
       &:hover{
@@ -107,7 +109,7 @@ export default {
     text-align: center;
     margin-top: 8px;
     background: #f0bf55;
-    padding: 10px 0;
+    padding: 6px 0;
     border: 1px solid #e9bd5c;
     border-radius: 4px;
     >div{

@@ -56,7 +56,9 @@ class Tetris {
     // 速度等级
     this.level = 1;
     // 下落时间间隔 初始为每隔1000ms下落一个小方格。
-    this.speedTime = 5;
+    this.speedTime = 1000;
+    // ai启用标志
+    this.aiFlag = false;
     // 当前活动块对象
     this.activeBlock = null;
     this.time = null;
@@ -977,7 +979,9 @@ class Tetris {
     } else {
       self.activeBlock = self.deepCopy(self.cacheBlock);
       // 评估那个落点最优 
-      self.activeBlock = TetrisAi(self);
+      if (self.aiFlag) {
+        self.activeBlock = TetrisAi(self);
+      }
       self.cacheBlock = self.buildRandBlock();
     }
 
@@ -1115,9 +1119,11 @@ class Tetris {
               time: self.timestampToDatetime(nowTime),
               useTime: self.diffTime(nowTime),
             };
-            self.vue.$emit("changeTable", params);
-            console.log("游戏结束");
-            document.getElementById("reStart").click();
+            if (self.aiFlag) {
+              self.vue.$emit("changeTable", params);
+              console.log("游戏结束");
+              document.getElementById("reStart").click();
+            }
             // 播放gameOver音效
             if (self.starVoiceFlag) {
               self.gameOver.currentTime = 0;
@@ -1413,7 +1419,7 @@ class Tetris {
       }
     });
     // 开始游戏 暂停游戏 事件
-    let startGame = document.getElementById("startGame");
+    const startGame = document.getElementById("startGame");
     startGame.addEventListener("click", function () {
       //播放点击音效
       clickAndioFunc();
@@ -1464,6 +1470,24 @@ class Tetris {
         }
       }
     });
+    // 开始Ai 关闭Ai 事件
+    const startAi = document.getElementById("startAi");
+    startAi.addEventListener("click", function () {
+      //播放点击音效
+      clickAndioFunc();
+      if (/startAi/.test(this.src)) {
+        this.src = require("../assets/images/stopAi.png");
+        self.speedTime = 5;
+        self.aiFlag = true;
+        document.getElementById("reStart").click();
+      } else {
+        this.src = require("../assets/images/startAi.png");
+        self.speedTime = 1000;
+        self.aiFlag = false;
+        document.getElementById("reStart").click();
+      }
+    })
+
     // 重新开始 事件
     let reStart = document.getElementById("reStart");
     reStart.addEventListener("click", function () {
@@ -1649,6 +1673,7 @@ class Tetris {
       divInfo.appendChild(imgDom);
     }
     creatImg("startGame");
+    creatImg("startAi");
     creatImg("reStart");
     creatImg("startVoice", "stopVoice");
 
