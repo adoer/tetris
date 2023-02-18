@@ -126,7 +126,7 @@ export default {
       padding: 0;
       background: none;
       display: flex;
-      border: 6px solid #fdcb5d;
+      border: 2px solid #fdcb5d;
       border-radius: 4px;
       background: #fdcb5d;
       >canvas:first-child{
@@ -136,8 +136,8 @@ export default {
     #divInfo{
       margin-left: 0;
       padding: 0;
-      padding-top: 6px;
-      padding-left: 6px;
+      padding-top: 2px;
+      padding-left: 2px;
       user-select: none;
       // height: 450px;
       border-left: none;
