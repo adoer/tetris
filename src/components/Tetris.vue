@@ -173,6 +173,11 @@ import Tetris from "@/js/tetrisBase.js"
   }
 }
 // Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .btnCon{
+    display: none;
+  }
+}
 @media (max-width: 768px) {
   .tetrisWrap {
     #tetris {
