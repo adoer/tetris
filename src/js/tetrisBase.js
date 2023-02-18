@@ -60,7 +60,7 @@ class Tetris {
     // 固定值 下落时间间隔 初始为每隔1000ms下落一个小方格。
     this.constSpeedTime = 1000;
     // 固定值  AI下落时间间隔 初始为每隔5ms下落一个小方格。
-    this.constSpeedTimeAI = 5;
+    this.constSpeedTimeAI = 20;
     // ai启用标志
     this.aiFlag = false;
     // 当前活动块对象
