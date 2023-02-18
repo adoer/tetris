@@ -102,7 +102,7 @@ import Tetris from "@/js/tetrisBase.js"
     overflow: hidden;
     padding: 20px;
     padding-right: 0px;
-    background: url(../assets/images/borderBg.png) no-repeat -5px -12px;
+    background: url(../assets/images/borderBg.webp) no-repeat -5px -12px;
     background-size: 303px 511px;
     // height: 546px;
     display: flex;
