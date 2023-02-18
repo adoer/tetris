@@ -72,11 +72,12 @@ import Tetris from "@/js/tetrisBase.js"
       // display: flex;
     }
     .btn{
-      padding: 6px;
-      background: #ffecc4;
+      padding: 8px;
+      background: #ffbf33;
       text-align: center;
       cursor: pointer;
       border-radius: 12px;
+      font-size: 20px;
     }
     @btnColor:#fdcb5d;
     .up{
