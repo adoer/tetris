@@ -67,6 +67,7 @@ import Tetris from "@/js/tetrisBase.js"
     background: #fdcb5d;
     // border-top: 1px solid #d7af4f;
     // height: 100px;
+    border-radius: 12px;
     padding: 6px;
     .btnWrap{
       // display: flex;
