@@ -118,4 +118,34 @@ export default {
     }
   }
 }
+// Medium devices (tablets, 768px and up)
+@media (max-width: 768px) {
+  .tetrisWrap {
+    #tetris {
+      overflow: hidden;
+      padding: 0;
+      background: none;
+      display: flex;
+      border: 6px solid #fdcb5d;
+      border-radius: 4px;
+      background: #fdcb5d;
+      >canvas:first-child{
+        border: 1px solid #d7af4f;
+      }
+    }
+    #divInfo{
+      margin-left: 0;
+      padding: 0;
+      padding-top: 6px;
+      padding-left: 6px;
+      user-select: none;
+      // height: 450px;
+      border-left: none;
+      border-radius: initial;
+      border-right: none;
+      border-bottom: none;
+      box-shadow: none;
+    }
+  }
+}
 </style>
