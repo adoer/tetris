@@ -55,8 +55,12 @@ class Tetris {
     this.hasRows = 0;
     // 速度等级
     this.level = 1;
-    // 下落时间间隔 初始为每隔1000ms下落一个小方格。
+    // 运行值 下落时间间隔 初始为每隔1000ms下落一个小方格。
     this.speedTime = 1000;
+    // 固定值 下落时间间隔 初始为每隔1000ms下落一个小方格。
+    this.constSpeedTime = 1000;
+    // 固定值  AI下落时间间隔 初始为每隔5ms下落一个小方格。
+    this.constSpeedTimeAI = 5;
     // ai启用标志
     this.aiFlag = false;
     // 当前活动块对象
@@ -1086,6 +1090,8 @@ class Tetris {
         self.updateDataArr();
         //重新生成新的方块坐标
         self.builBlockXY();
+        self.speedTime = self.constSpeedTime
+        self.loopDown()
         moveFlag = false;
         break;
       }
@@ -1136,6 +1142,8 @@ class Tetris {
           }
 
         }
+        self.speedTime = self.constSpeedTime
+        self.loopDown()
         moveFlag = false;
         break;
       }
@@ -1359,6 +1367,17 @@ class Tetris {
       self.rotate();
     }
   }
+  // 快速下落
+  speedDownFunc() {
+    const self = this;
+    if (self.starFlag && self.toTopFlag) {
+      //记录方向键下键与S键按下的状态
+      self.speedDownFlag = true;
+      self.moveVoiceFunc();
+      self.speedTime = 5
+      self.loopDown()
+    }
+  }
   // 下 与 S键
   downAnds() {
     const self = this;
@@ -1400,6 +1419,7 @@ class Tetris {
   }
   // 放开下方向及s键时
   downKeyUp() {
+    // debugger
     const self = this;
     if (self.starFlag && self.toTopFlag) {
       self.speedDownFlag = false;
@@ -1423,6 +1443,7 @@ class Tetris {
       }
       // 下 与 S键
       if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") {
+        // console.log(e.key)
         self.downAnds();
       }
       // 左 与 A键
@@ -1435,7 +1456,7 @@ class Tetris {
       }
       //space
       if (e.key === " ") {
-        self.moveVoiceFunc();
+        self.speedDownFunc();
         console.log("瞬间坠落");
       }
     });
@@ -1503,12 +1524,12 @@ class Tetris {
       clickAndioFunc();
       if (/startAi/.test(this.src)) {
         this.src = require("../assets/images/stopAi.png");
-        self.speedTime = 5;
+        self.speedTime = self.constSpeedTimeAI;
         self.aiFlag = true;
         document.getElementById("reStart").click();
       } else {
         this.src = require("../assets/images/startAi.png");
-        self.speedTime = 1000;
+        self.speedTime = self.constSpeedTime;
         self.aiFlag = false;
         document.getElementById("reStart").click();
       }
@@ -1560,7 +1581,7 @@ class Tetris {
       // self.speedTime = 1000;
 
       if (self.time) {
-        clearTimeout(self.time);
+        // clearTimeout(self.time);
         // 清空画布
         self.clearCanvas();
         // 绘制基础底色和网格
@@ -1569,7 +1590,7 @@ class Tetris {
         self.builBlockXY();
         //重新生成dataArr
         self.buildDataArr();
-
+        self.speedTime = self.constSpeedTime;
         self.loopDown();
       } else {
         // 如果第一次进来 游戏还没有开始 则不做任何操作
@@ -1777,6 +1798,9 @@ class Tetris {
   //循环下落
   loopDown() {
     const self = this;
+    if (self.time) {
+      clearInterval(self.time);
+    }
     self.time = setInterval(function () {
       if (self.starFlag && self.toTopFlag) {
         // 清空画布
@@ -1796,7 +1820,6 @@ class Tetris {
       }
     }, self.speedTime);
     // clearInterval(self.time);
-    // con();
   }
   //预加载所需图片
   preImg() {

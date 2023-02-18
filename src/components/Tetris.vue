@@ -5,18 +5,18 @@
     <div class="btnCon">
       <div class="btnWrap">
         <div class="btn up" @touchstart="upstart()">
-          上
+          <iconArrow/>
         </div>
         <div class="btnMid">
           <div class="btn left" @touchstart="leftstart()">
-            左
+            <iconArrow style="transform: rotate(-90deg);"/>
           </div>
           <div class="btn right" @touchstart="rightstart()">
-            右
-          </div>
+            <iconArrow style="transform: rotate(90deg);"/>
+          </div> 
         </div>
         <div class="btn down" @touchstart="downstart()" @touchend="touchendDown()">
-          下
+          <iconArrow style="transform: rotate(180deg);"/>
         </div>
       </div>
       
@@ -25,6 +25,7 @@
 </template>
 
 <script setup>
+import iconArrow from "./iconArrow.vue";
 import { ref,onMounted } from 'vue'
 import Tetris from "@/js/tetrisBase.js"
   let tet = null
@@ -42,8 +43,8 @@ import Tetris from "@/js/tetrisBase.js"
     tet.downAnds()
   }
   function touchendDown(){
-    console.log('touchendDown')
-    tet.downKeyUp()
+    // console.log('touchendDown')
+    tet.speedDownFunc()
   }
   onMounted(()=>{
     tet = new Tetris({
@@ -65,22 +66,23 @@ import Tetris from "@/js/tetrisBase.js"
     background: #fdcb5d;
     // border-top: 1px solid #d7af4f;
     // height: 100px;
+    padding: 6px;
     .btnWrap{
       // display: flex;
     }
     .btn{
       padding: 6px;
-      background:#fdcb5d;
+      background: #ffecc4;
       text-align: center;
       cursor: pointer;
-      // border-radius: 6px;
+      border-radius: 12px;
     }
-    @btnColor:#d7af4f;
+    @btnColor:#fdcb5d;
     .up{
-      border-bottom: 1px solid @btnColor;
+      border-bottom: 2px solid @btnColor;
     }
     .down{
-      border-top: 1px solid @btnColor;
+      border-top: 2px solid @btnColor;
     }
     .left{
       width: 50%;
