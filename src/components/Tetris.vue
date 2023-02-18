@@ -64,23 +64,21 @@ import Tetris from "@/js/tetrisBase.js"
   // justify-content: center;
   // align-items: center;
   .btnCon{
-    background: #fdcb5d;
-    // border-top: 1px solid #d7af4f;
-    // height: 100px;
-    border-radius: 12px;
+    background: #faad14;
+    border-radius: 60px;
     padding: 6px;
     .btnWrap{
       // display: flex;
     }
     .btn{
       padding: 8px;
-      background: #ffbf33;
+      background: #fdcb5d;
       text-align: center;
       cursor: pointer;
       border-radius: 12px;
       font-size: 20px;
     }
-    @btnColor:#fdcb5d;
+    @btnColor:#faad14;
     .up{
       border-bottom: 2px solid @btnColor;
     }
@@ -191,7 +189,7 @@ import Tetris from "@/js/tetrisBase.js"
       background: none;
       display: flex;
       border: 2px solid #fdcb5d;
-      border-radius: 4px;
+      border-radius: 16px;
       background: #fdcb5d;
       >canvas:first-child{
         border: 1px solid #d7af4f;
