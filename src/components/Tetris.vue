@@ -39,12 +39,13 @@ import Tetris from "@/js/tetrisBase.js"
     tet.rightAndd()
   }
   function downstart(){
-    console.log('downstart')
-    tet.downAnds()
+    // console.log('downstart')
+    tet.speedDownFunc(30)
+    // tet.downAnds()
   }
   function touchendDown(){
     // console.log('touchendDown')
-    tet.speedDownFunc()
+    tet.backNormaSpeed()
   }
   const { proxy } = getCurrentInstance()
   onMounted(()=>{

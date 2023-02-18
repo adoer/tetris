@@ -1374,13 +1374,13 @@ class Tetris {
     }
   }
   // 快速下落
-  speedDownFunc() {
+  speedDownFunc(time) {
     const self = this;
     if (self.starFlag && self.toTopFlag) {
       //记录方向键下键与S键按下的状态
-      self.speedDownFlag = true;
+      // self.speedDownFlag = true;
       self.moveVoiceFunc();
-      self.speedTime = 5
+      self.speedTime = time
       self.loopDown()
     }
   }
@@ -1462,7 +1462,7 @@ class Tetris {
       }
       //space
       if (e.key === " ") {
-        self.speedDownFunc();
+        self.speedDownFunc(5);
         // console.log("瞬间坠落");
       }
     });
@@ -1803,6 +1803,14 @@ class Tetris {
     const self = this;
     self.imgGameIntroduction.onload = function () {
       self.canvas.ctx.drawImage(self.imgGameIntroduction, 0, 0, this.width, this.height);
+    }
+  }
+  // 恢复正常速度循环下落
+  backNormaSpeed() {
+    const self = this;
+    if (self.starFlag && self.toTopFlag) {
+      self.speedTime = self.constSpeedTime;
+      self.loopDown();
     }
   }
   //循环下落
