@@ -86,11 +86,11 @@ import Tetris from "@/js/tetrisBase.js"
       border-top: 2px solid @btnColor;
     }
     .left{
-      width: 50%;
+      width: 30%;
       border-right: 1px solid @btnColor;
     }
     .right{
-      width: 50%;
+      flex: 1 1;
     }
     .btnMid{
       display: flex;
