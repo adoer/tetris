@@ -2,36 +2,55 @@
   <div class="tetrisWrap">
     <div id="tetris">
     </div>
+    <div class="btnCon">
+      <div class="btnWrap">
+        <div class="btn up" @touchstart="upstart()">
+          上
+        </div>
+        <div class="btnMid">
+          <div class="btn left" @touchstart="leftstart()">
+            左
+          </div>
+          <div class="btn right" @touchstart="rightstart()">
+            右
+          </div>
+        </div>
+        <div class="btn down" @touchstart="downstart()" @touchend="touchendDown()">
+          下
+        </div>
+      </div>
+      
+    </div>
   </div>
 </template>
 
-<script>
-import { ref } from 'vue'
+<script setup>
+import { ref,onMounted } from 'vue'
 import Tetris from "@/js/tetrisBase.js"
-export default {
-  name: 'Tetris',
-  props: {
-    msg: String
-  },
-  data(){
-    return {
-      test: 1,
-    }
-  },
-  setup () {
-    const repositories = ref(2);
-    return {
-      repositories,
-    }
-  },
-  methods:{
-  },
-  mounted(){
-    new Tetris({
+  let tet = null
+  function upstart(){
+    tet.upAndw()
+  }
+  function leftstart(){
+    tet.leftAnda()
+  }
+  function rightstart(){
+    tet.rightAndd()
+  }
+  function downstart(){
+    console.log('downstart')
+    tet.downAnds()
+  }
+  function touchendDown(){
+    console.log('touchendDown')
+    tet.downKeyUp()
+  }
+  onMounted(()=>{
+    tet = new Tetris({
       id: "tetris"
     },this);
-  },
-}
+  })
+// }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -39,9 +58,42 @@ export default {
 .tetrisWrap{
   // height: 100%;
   // width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  .btnCon{
+    background: #fdcb5d;
+    // border-top: 1px solid #d7af4f;
+    // height: 100px;
+    .btnWrap{
+      // display: flex;
+    }
+    .btn{
+      padding: 6px;
+      background:#fdcb5d;
+      text-align: center;
+      cursor: pointer;
+      // border-radius: 6px;
+    }
+    @btnColor:#d7af4f;
+    .up{
+      border-bottom: 1px solid @btnColor;
+    }
+    .down{
+      border-top: 1px solid @btnColor;
+    }
+    .left{
+      width: 50%;
+      border-right: 1px solid @btnColor;
+    }
+    .right{
+      width: 50%;
+    }
+    .btnMid{
+      display: flex;
+      justify-content: space-between;
+    }
+  }
   #tetris{
     // width: 490px;
     overflow: hidden;

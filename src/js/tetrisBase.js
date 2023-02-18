@@ -1341,81 +1341,107 @@ class Tetris {
       }
     }, 1000);
   }
+  // 移动音效
+  moveVoiceFunc() {
+    const self = this;
+    let startVoiceBtn = document.getElementById("startVoice");
+    //判断当开启声音时才调用
+    if (/stopVoice/.test(startVoiceBtn.src)) {
+      self.moveAudio.currentTime = 0;
+      self.moveAudio.play();
+    }
+  }
+  // 上 与 W键
+  upAndw() {
+    const self = this;
+    if (self.starFlag && self.toTopFlag) {
+      self.moveVoiceFunc();
+      self.rotate();
+    }
+  }
+  // 下 与 S键
+  downAnds() {
+    const self = this;
+    if (self.starFlag && self.toTopFlag) {
+      //记录方向键下键与S键按下的状态
+      self.speedDownFlag = true;
+      self.moveVoiceFunc();
+      // 清空画布
+      self.clearCanvas();
+      // 绘制基础底色和网格
+      self.drawBase();
+      // 生成下一个方块的坐标
+      self.changeBlockXY();
+      // 绘制dataArr中值为1的小方块
+      self.drawDataArrCanvas();
+      if (self.drawCanvasBlockFlag) {
+        // 根据方块坐标绘制新的方块
+        self.drawBlockCanvas();
+      }
+      //是否要绘制游戏结束画面
+      self.showGameOver();
+    }
+  }
+  // 左 与 A键
+  leftAnda() {
+    const self = this;
+    if (self.starFlag && self.toTopFlag) {
+      self.moveVoiceFunc();
+      self.changeLeftRightBlockXY("left");
+    }
+  }
+  // 右 与 D键
+  rightAndd() {
+    const self = this;
+    if (self.starFlag && self.toTopFlag) {
+      self.moveVoiceFunc();
+      self.changeLeftRightBlockXY("right");
+    }
+  }
+  // 放开下方向及s键时
+  downKeyUp() {
+    const self = this;
+    if (self.starFlag && self.toTopFlag) {
+      self.speedDownFlag = false;
+    }
+  }
   // 监听键盘上下左右事件
   bindEvent() {
     const self = this;
     let moveVoice = document.getElementById("moveVoice");
-    let startVoiceBtn = document.getElementById("startVoice");
-    // 移动音效
-    function moveVoiceFunc() {
-      //判断当开启声音时才调用
-      if (/stopVoice/.test(startVoiceBtn.src)) {
-        self.moveAudio.currentTime = 0;
-        self.moveAudio.play();
-      }
-    }
     //点击音效
     function clickAndioFunc() {
       self.clickAudio.currentTime = 0;
       self.clickAudio.play();
     }
-
     document.addEventListener("keydown", function (e) {
+      // console.log(e.key, e.keyCode)
       // 监听方向键
       // 上 与 W键
-      if (e.keyCode == "38" || e.keyCode == "87") {
-        if (self.starFlag && self.toTopFlag) {
-          moveVoiceFunc();
-          self.rotate();
-        }
+      if (e.key === "ArrowUp" || e.key === "w" || e.key === "W") {
+        self.upAndw();
       }
       // 下 与 S键
-      if (e.keyCode == "40" || e.keyCode == "83") {
-        if (self.starFlag && self.toTopFlag) {
-          //记录方向键下键与S键按下的状态
-          self.speedDownFlag = true;
-          moveVoiceFunc();
-          // 清空画布
-          self.clearCanvas();
-          // 绘制基础底色和网格
-          self.drawBase();
-          // 生成下一个方块的坐标
-          self.changeBlockXY();
-          // 绘制dataArr中值为1的小方块
-          self.drawDataArrCanvas();
-          if (self.drawCanvasBlockFlag) {
-            // 根据方块坐标绘制新的方块
-            self.drawBlockCanvas();
-          }
-          //是否要绘制游戏结束画面
-          self.showGameOver();
-        }
+      if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") {
+        self.downAnds();
       }
       // 左 与 A键
-      if (e.keyCode == "37" || e.keyCode == "65") {
-        if (self.starFlag && self.toTopFlag) {
-          moveVoiceFunc();
-          self.changeLeftRightBlockXY("left");
-        }
+      if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") {
+        self.leftAnda();
       }
       // 右 与 D键
-      if (e.keyCode == "39" || e.keyCode == "68") {
-        if (self.starFlag && self.toTopFlag) {
-          moveVoiceFunc();
-          self.changeLeftRightBlockXY("right");
-        }
+      if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") {
+        self.rightAndd();
       }
       //space
-      if (e.keyCode == "32") {
-        moveVoiceFunc();
+      if (e.key === " ") {
+        self.moveVoiceFunc();
         console.log("瞬间坠落");
       }
     });
     document.addEventListener("keyup", function (e) {
-      if (e.keyCode == "40" || e.keyCode == "83") {
-        if (self.starFlag && self.toTopFlag) {
-          self.speedDownFlag = false;
-        }
+      if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") {
+        self.downKeyUp();
       }
     });
     // 开始游戏 暂停游戏 事件
