@@ -1090,8 +1090,10 @@ class Tetris {
         self.updateDataArr();
         //重新生成新的方块坐标
         self.builBlockXY();
-        self.speedTime = self.constSpeedTime
-        self.loopDown()
+        if (!self.aiFlag) {
+          self.speedTime = self.constSpeedTime
+          self.loopDown()
+        }
         moveFlag = false;
         break;
       }
@@ -1127,9 +1129,11 @@ class Tetris {
             };
             if (self.aiFlag) {
               self.vue.$emit("changeTable", params);
-              console.log("游戏结束");
               document.getElementById("reStart").click();
             }
+            console.log("游戏结束");
+            // 重置返回按钮开始背景图
+            document.getElementById("startGame").src = require("../assets/images/startGame.webp")
             // 播放gameOver音效
             if (self.starVoiceFlag) {
               self.gameOver.currentTime = 0;
@@ -1142,8 +1146,10 @@ class Tetris {
           }
 
         }
-        self.speedTime = self.constSpeedTime
-        self.loopDown()
+        if (!self.aiFlag) {
+          self.speedTime = self.constSpeedTime
+          self.loopDown()
+        }
         moveFlag = false;
         break;
       }
@@ -1457,7 +1463,7 @@ class Tetris {
       //space
       if (e.key === " ") {
         self.speedDownFunc();
-        console.log("瞬间坠落");
+        // console.log("瞬间坠落");
       }
     });
     document.addEventListener("keyup", function (e) {
@@ -1492,15 +1498,16 @@ class Tetris {
             }
           }, 5)
         }
-
+        this.src = require("../assets/images/stopGame.webp");
         if (self.toTopFlag === true) {
           self.starFlag = true;
-          this.src = require("../assets/images/stopGame.png");
           if (self.activeBlock === null) {
             self.activeBlock = self.deepCopy(self.cacheBlock);
             self.cacheBlock = self.buildRandBlock();
             self.drawCacheBlock();
           }
+        } else {
+          document.getElementById("reStart").click();
         }
         //开始计时
         if (!self.useTimeFlag) {
@@ -1511,9 +1518,9 @@ class Tetris {
           self.loopDown();
         }
       } else {
+        this.src = require("../assets/images/startGame.webp");
         if (self.toTopFlag === true) {
           self.starFlag = false;
-          this.src = require("../assets/images/startGame.png");
         }
       }
     });
@@ -1523,15 +1530,18 @@ class Tetris {
       //播放点击音效
       clickAndioFunc();
       if (/startAi/.test(this.src)) {
-        this.src = require("../assets/images/stopAi.png");
+        this.src = require("../assets/images/stopAi.webp");
         self.speedTime = self.constSpeedTimeAI;
         self.aiFlag = true;
-        document.getElementById("reStart").click();
+        self.loopDown()
+        // document.getElementById("reStart").click();
       } else {
-        this.src = require("../assets/images/startAi.png");
+        this.src = require("../assets/images/startAi.webp");
         self.speedTime = self.constSpeedTime;
         self.aiFlag = false;
-        document.getElementById("reStart").click();
+        self.speedTime = self.constSpeedTime
+        self.loopDown()
+        // document.getElementById("reStart").click();
       }
     })
 
@@ -1551,7 +1561,7 @@ class Tetris {
         if (self.activeBlock === null) {
           return false;
         }
-        startGame.src = require("../assets/images/stopGame.png");
+        startGame.src = require("../assets/images/stopGame.webp");
       }
 
       //重新计时
@@ -1590,7 +1600,7 @@ class Tetris {
         self.builBlockXY();
         //重新生成dataArr
         self.buildDataArr();
-        self.speedTime = self.constSpeedTime;
+        // self.speedTime = self.constSpeedTime;
         self.loopDown();
       } else {
         // 如果第一次进来 游戏还没有开始 则不做任何操作
@@ -1602,11 +1612,11 @@ class Tetris {
       //播放点击音效
       clickAndioFunc();
       if (/stopVoice/.test(this.src)) {
-        this.src = require("../assets/images/startVoice.png");
+        this.src = require("../assets/images/startVoice.webp");
         self.bgAudio.pause();
         self.starVoiceFlag = false;
       } else {
-        this.src = require("../assets/images/stopVoice.png");
+        this.src = require("../assets/images/stopVoice.webp");
         self.bgAudio.play();
         self.starVoiceFlag = true;
       }
@@ -1715,7 +1725,7 @@ class Tetris {
     function creatImg(id, fileName) {
       let imgDom = document.createElement("img");
       let file = fileName || id;
-      imgDom.src = require("../assets/images/" + file + ".png");
+      imgDom.src = require("../assets/images/" + file + ".webp");
       imgDom.id = id;
       divInfo.appendChild(imgDom);
     }
@@ -1846,7 +1856,7 @@ class Tetris {
     self.imgLightBlue.src = require("../assets/images/lightBlueBlcok.png");
 
     self.imgGameOver = new Image();
-    self.imgGameOver.src = require("../assets/images/gameOver.png");
+    self.imgGameOver.src = require("../assets/images/gameOver.webp");
 
     self.imgGameIntroduction = new Image();
     self.imgGameIntroduction.src = require("../assets/images/gameIntroduction.jpg");

@@ -26,7 +26,7 @@
 
 <script setup>
 import iconArrow from "./iconArrow.vue";
-import { ref,onMounted } from 'vue'
+import { ref,onMounted,getCurrentInstance } from 'vue'
 import Tetris from "@/js/tetrisBase.js"
   let tet = null
   function upstart(){
@@ -46,10 +46,11 @@ import Tetris from "@/js/tetrisBase.js"
     // console.log('touchendDown')
     tet.speedDownFunc()
   }
+  const { proxy } = getCurrentInstance()
   onMounted(()=>{
     tet = new Tetris({
       id: "tetris"
-    },this);
+    },proxy);
   })
 // }
 </script>
