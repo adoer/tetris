@@ -43,12 +43,13 @@ export default {
   justify-content: center;
   align-items: center;
   #tetris{
-    width: 490px;
+    // width: 490px;
     overflow: hidden;
-    padding: 47px;
-    background: url(../assets/images/borderBg.png) no-repeat 22px 16px;
+    padding: 20px;
+    padding-right: 0px;
+    background: url(../assets/images/borderBg.png) no-repeat -5px -12px;
     background-size: 303px 511px;
-    height: 546px;
+    // height: 546px;
     display: flex;
     //调整ie9、ie10的样式问题
     background-size: 301px 509px\9;

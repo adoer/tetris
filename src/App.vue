@@ -160,6 +160,7 @@ export default {
   background: #fff;
   @borderRadius: 6px;
   border-radius: @borderRadius;
+  margin-left: 20px;
   .headCon{
     margin: 10px 0;
     display: flex;
@@ -184,5 +185,10 @@ export default {
     border-radius: @borderRadius;
   }
 }
-
+// Medium devices (tablets, 768px and up)
+@media (max-width: 768px) {
+  .statistics {
+    display: none
+  }
+}
 </style>
