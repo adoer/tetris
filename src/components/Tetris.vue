@@ -176,11 +176,13 @@ import Tetris from "@/js/tetrisBase.js"
   }
 }
 // Medium devices (tablets, 768px and up)
-@media (min-width: 768px) {
+// 大于等于
+@media (min-width: 769px) {
   .btnCon{
     display: none;
   }
 }
+// 小于等于
 @media (max-width: 768px) {
   .tetrisWrap {
     #tetris {

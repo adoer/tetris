@@ -1859,7 +1859,7 @@ class Tetris {
     self.imgGameOver.src = require("../assets/images/gameOver.webp");
 
     self.imgGameIntroduction = new Image();
-    self.imgGameIntroduction.src = require("../assets/images/gameIntroduction.jpg");
+    self.imgGameIntroduction.src = require("../assets/images/gameIntroduction1.jpg");
   }
   _init() {
     const self = this;
